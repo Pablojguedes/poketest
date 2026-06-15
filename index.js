@@ -1,6 +1,13 @@
-import { UI } from "./ui.js";
+import DexView from "./dex-view.js";
+import UIFeedback from "./components/ui-feedback.js";
 
 const POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon/";
+
+const dexView = new DexView(
+  "pokemon-info-div",
+  "pokemon-team-section",
+  "pokemon-team-grid",
+);
 
 async function fetchPokemonData(pokemonName) {
   try {
@@ -24,20 +31,20 @@ document
     const pokemonName = document.getElementById("pokemon-name-input").value;
 
     if (pokemonName.trim() === "") {
-      UI.addErrorMessage(
+      UIFeedback.addErrorMessage(
         "pokemon-name-input",
         "pokemon-input-error",
         "O nome não pode ser vazio",
       );
       return;
     }
-    UI.showLoading("pokemon-info-div", "Carregando...", "loading-p");
+    UIFeedback.showLoading("pokemon-info-div", "Carregando...", "loading-p");
 
     try {
       const pokemonData = await fetchPokemonData(pokemonName);
-      UI.displayPokemonData("pokemon-info-div", pokemonData);
+      dexView.displayPokemonData(pokemonData);
     } finally {
-      UI.hideLoading("loading-p");
+      UIFeedback.hideLoading("loading-p");
     }
   });
 
@@ -55,7 +62,7 @@ document.addEventListener("click", function (e) {
   }
 
   if (e.target.id === "pokemon-name-input") return;
-  UI.removeErrorMessage("pokemon-name-input", "pokemon-input-error");
+  UIFeedback.removeErrorMessage("pokemon-name-input", "pokemon-input-error");
 });
 
 document.addEventListener("pokemon:add-to-team", function (event) {
@@ -63,5 +70,5 @@ document.addEventListener("pokemon:add-to-team", function (event) {
     detail: { name, image },
   } = event;
 
-  UI.appendCard("pokemon-team-div", UI.createCard(name, image));
+  dexView.appendCard(name, image);
 });

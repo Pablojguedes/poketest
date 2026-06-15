@@ -26,7 +26,9 @@
         </div>
     </div>
     <script src="util.js" type="module"></script>
-    <script src="ui.js" type="module"></script>
+    <script src="dex-view.js" type="module"></script>
+    <script src="components/ui-components.js" type="module"></script>
+    <script src="components/ui-feedback.js" type="module"></script>
     <script src="index.js" type="module"></script>
 </body>
 
