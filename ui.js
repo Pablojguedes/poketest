@@ -43,11 +43,28 @@ export class UI {
 
     const fragment = document.createDocumentFragment();
 
-    const title = document.createElement("h2");
-    const titleTextNode = document.createTextNode(capitalize(pokemonData.name));
-    title.appendChild(titleTextNode);
+    const titleDiv = document.createElement("div");
 
-    title.classList.add("font-bold");
+    const selectButton = this.createCustomElement("button", "+", [
+      "bg-blue-500",
+      "text-white",
+      "w-8",
+      "h-8",
+      "flex",
+      "items-center",
+      "justify-center",
+      "rounded-full",
+      "hover:bg-blue-600",
+      "transition-colors",
+    ]);
+
+    const title = this.createCustomElement("h2", capitalize(pokemonData.name), [
+      "font-bold",
+    ]);
+
+    titleDiv.appendChild(title);
+    titleDiv.appendChild(selectButton);
+    titleDiv.classList.add("flex", "justify-between", "items-start");
 
     const image = document.createElement("img");
     image.src =
@@ -56,7 +73,7 @@ export class UI {
       ];
     image.alt = pokemonData.name;
 
-    fragment.appendChild(title);
+    fragment.appendChild(titleDiv);
     fragment.appendChild(image);
     fragment.appendChild(this.createPElement("Height", pokemonData.height));
     fragment.appendChild(this.createPElement("Weight", pokemonData.weight));
@@ -104,5 +121,18 @@ export class UI {
   static hideLoading(childId) {
     const loadingParagraph = document.getElementById(childId);
     if (loadingParagraph) loadingParagraph.remove();
+  }
+
+  static createCustomElement(type, text = "", classes = []) {
+    const element = document.createElement(type);
+    if (text) {
+      const textNode = document.createTextNode(text);
+      element.appendChild(textNode);
+    }
+
+    if (classes.length > 0) {
+      element.classList.add(...classes);
+    }
+    return element;
   }
 }

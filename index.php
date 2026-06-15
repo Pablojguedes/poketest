@@ -18,7 +18,8 @@
         </div>
         <button id="pokemon-submit-button" type="submit" class="bg-blue-500 text-white p-2 rounded">Buscar</button>
     </form>
-    <div id="pokemon-info-div" class="mt-4 p-4 bg-white rounded shadow"></div>
+    <div id="pokemon-info-div" class="mt-4 p-4 bg-white rounded shadow max-w-[200px]"></div>
+    <div id="pokemon-team-div" class="mt-4 p-4 bg-white rounded shadow hidden"></div>
     <script src="util.js" type="module"></script>
     <script src="ui.js" type="module"></script>
     <script src="index.js" type="module"></script>
