@@ -1,5 +1,10 @@
 import DexView from "./dex-view.js";
-import UIFeedback from "./components/ui-feedback.js";
+import {
+  addErrorMessage,
+  hideLoading,
+  removeErrorMessage,
+  showLoading,
+} from "./components/ui-feedback.js";
 
 const POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon/";
 
@@ -31,20 +36,20 @@ document
     const pokemonName = document.getElementById("pokemon-name-input").value;
 
     if (pokemonName.trim() === "") {
-      UIFeedback.addErrorMessage(
+      addErrorMessage(
         "pokemon-name-input",
         "pokemon-input-error",
         "O nome não pode ser vazio",
       );
       return;
     }
-    UIFeedback.showLoading("pokemon-info-div", "Carregando...", "loading-p");
+    showLoading("pokemon-info-div", "Carregando...", "loading-p");
 
     try {
       const pokemonData = await fetchPokemonData(pokemonName);
       dexView.displayPokemonData(pokemonData);
     } finally {
-      UIFeedback.hideLoading("loading-p");
+      hideLoading("loading-p");
     }
   });
 
@@ -62,7 +67,7 @@ document.addEventListener("click", function (e) {
   }
 
   if (e.target.id === "pokemon-name-input") return;
-  UIFeedback.removeErrorMessage("pokemon-name-input", "pokemon-input-error");
+  removeErrorMessage("pokemon-name-input", "pokemon-input-error");
 });
 
 document.addEventListener("pokemon:add-to-team", function (event) {

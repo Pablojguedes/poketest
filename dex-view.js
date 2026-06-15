@@ -1,5 +1,11 @@
 import { capitalize } from "./util.js";
-import UIComponents from "./components/ui-components.js";
+import {
+  createCustomElement,
+  createErrorParagraph,
+  createImage,
+  createPElement,
+  createTeamCard,
+} from "./components/ui-components.js";
 
 export default class DexView {
   infoDiv;
@@ -14,7 +20,7 @@ export default class DexView {
 
   displayPokemonData(pokemonData) {
     if (!pokemonData) {
-      const errorParagraph = UIComponents.createErrorParagraph(
+      const errorParagraph = createErrorParagraph(
         "Pokémon não encontrado. Tente outro nome!",
       );
 
@@ -30,7 +36,7 @@ export default class DexView {
       pokemonData.sprites.versions["generation-v"]["black-white"].animated[
         "front_default"
       ];
-    const selectButton = UIComponents.createCustomElement({
+    const selectButton = createCustomElement({
       tag: "button",
       text: "+",
       classes: [
@@ -49,7 +55,7 @@ export default class DexView {
       dataset: { name: pokemonData.name.toLowerCase(), image: imageSrc },
     });
 
-    const title = UIComponents.createCustomElement({
+    const title = createCustomElement({
       tag: "h2",
       text: capitalize(pokemonData.name),
       classes: ["font-bold"],
@@ -59,22 +65,17 @@ export default class DexView {
     titleDiv.appendChild(selectButton);
     titleDiv.classList.add("flex", "justify-between", "items-start");
 
-    const image = UIComponents.createImage(
-      imageSrc,
-      capitalize(pokemonData.name),
-      ["w-16", "h-16"],
-    );
+    const image = createImage(imageSrc, capitalize(pokemonData.name), [
+      "w-16",
+      "h-16",
+    ]);
 
     fragment.appendChild(titleDiv);
     fragment.appendChild(image);
+    fragment.appendChild(createPElement("Height", pokemonData.height));
+    fragment.appendChild(createPElement("Weight", pokemonData.weight));
     fragment.appendChild(
-      UIComponents.createPElement("Height", pokemonData.height),
-    );
-    fragment.appendChild(
-      UIComponents.createPElement("Weight", pokemonData.weight),
-    );
-    fragment.appendChild(
-      UIComponents.createPElement(
+      createPElement(
         "Types",
         pokemonData.types.map((type) => type.type.name).join(", "),
       ),
@@ -85,7 +86,7 @@ export default class DexView {
   appendCard(name, image) {
     this.teamDiv.classList.remove("hidden");
 
-    const card = UIComponents.createTeamCard(name, image);
+    const card = createTeamCard(name, image);
     this.teamGrid.appendChild(card);
   }
 }

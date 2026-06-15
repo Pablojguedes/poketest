@@ -1,46 +1,48 @@
-import UIComponents from "./ui-components.js";
-export default class UIFeedback {
-  static addErrorMessage(inputIdentifier, errorIdentifier, errorMessage) {
-    const pokemonInput = document.getElementById(inputIdentifier);
+import { createErrorParagraph } from "./ui-components.js";
 
-    if (!pokemonInput.classList.contains("border-red-500")) {
-      pokemonInput.classList.add("border-red-500");
-    }
+export function addErrorMessage(
+  inputIdentifier,
+  errorIdentifier,
+  errorMessage,
+) {
+  const pokemonInput = document.getElementById(inputIdentifier);
 
-    if (!document.getElementById(errorIdentifier)) {
-      const invalidFormParagraph = UIComponents.createErrorParagraph(
-        errorMessage,
-        ["text-sm"],
-      );
-
-      invalidFormParagraph.id = errorIdentifier;
-      pokemonInput.insertAdjacentElement("afterend", invalidFormParagraph);
-    }
+  if (!pokemonInput.classList.contains("border-red-500")) {
+    pokemonInput.classList.add("border-red-500");
   }
 
-  static removeErrorMessage(inputIdentifier, errorIdentifier) {
-    const pokemonInput = document.getElementById(inputIdentifier);
+  if (!document.getElementById(errorIdentifier)) {
+    const invalidFormParagraph = createErrorParagraph(errorMessage, [
+      "text-sm",
+    ]);
 
-    if (pokemonInput.classList.contains("border-red-500"))
-      pokemonInput.classList.remove("border-red-500");
-
-    const invalidFormPar = document.getElementById(errorIdentifier);
-    if (invalidFormPar) {
-      invalidFormPar.remove();
-    }
+    invalidFormParagraph.id = errorIdentifier;
+    pokemonInput.insertAdjacentElement("afterend", invalidFormParagraph);
   }
+}
 
-  static showLoading(parent, text, childId) {
-    const pokemonInfoDiv = document.getElementById(parent);
-    const loadingParagraph = document.createElement("p");
-    const loadingText = document.createTextNode(text);
-    loadingParagraph.appendChild(loadingText);
-    loadingParagraph.id = childId;
-    pokemonInfoDiv.replaceChildren(loadingParagraph);
-  }
+export function removeErrorMessage(inputIdentifier, errorIdentifier) {
+  const pokemonInput = document.getElementById(inputIdentifier);
 
-  static hideLoading(childId) {
-    const loadingParagraph = document.getElementById(childId);
-    if (loadingParagraph) loadingParagraph.remove();
+  if (pokemonInput.classList.contains("border-red-500"))
+    pokemonInput.classList.remove("border-red-500");
+
+  const invalidFormPar = document.getElementById(errorIdentifier);
+  if (invalidFormPar) {
+    invalidFormPar.remove();
   }
+}
+
+export function showLoading(parent, text, childId) {
+  const pokemonInfoDiv = document.getElementById(parent);
+  const loadingParagraph = document.createElement("p");
+  const loadingText = document.createTextNode(text);
+  loadingParagraph.appendChild(loadingText);
+  loadingParagraph.id = childId;
+  pokemonInfoDiv.replaceChildren(loadingParagraph);
+}
+
+export function hideLoading(childId) {
+  const loadingParagraph = document.getElementById(childId);
+  if (loadingParagraph) loadingParagraph.remove();
 }
