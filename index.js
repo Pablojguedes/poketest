@@ -42,6 +42,26 @@ document
   });
 
 document.addEventListener("click", function (e) {
+  if (e.target.id === "pokemon-select-button") {
+    const pokemonName = e.target.dataset.name;
+    const imageUrl = e.target.dataset.image;
+
+    document.dispatchEvent(
+      new CustomEvent("pokemon:add-to-team", {
+        detail: { name: pokemonName, image: imageUrl },
+      }),
+    );
+    return;
+  }
+
   if (e.target.id === "pokemon-name-input") return;
   UI.removeErrorMessage("pokemon-name-input", "pokemon-input-error");
+});
+
+document.addEventListener("pokemon:add-to-team", function (event) {
+  const {
+    detail: { name, image },
+  } = event;
+
+  UI.appendCard("pokemon-team-div", UI.createCard(name, image));
 });

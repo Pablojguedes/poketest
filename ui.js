@@ -45,32 +45,42 @@ export class UI {
 
     const titleDiv = document.createElement("div");
 
-    const selectButton = this.createCustomElement("button", "+", [
-      "bg-blue-500",
-      "text-white",
-      "w-8",
-      "h-8",
-      "flex",
-      "items-center",
-      "justify-center",
-      "rounded-full",
-      "hover:bg-blue-600",
-      "transition-colors",
-    ]);
+    const imageSrc =
+      pokemonData.sprites.versions["generation-v"]["black-white"].animated[
+        "front_default"
+      ];
+    const selectButton = this.createCustomElement({
+      tag: "button",
+      text: "+",
+      classes: [
+        "bg-blue-500",
+        "text-white",
+        "w-8",
+        "h-8",
+        "flex",
+        "items-center",
+        "justify-center",
+        "rounded-full",
+        "hover:bg-blue-600",
+        "transition-colors",
+      ],
+      id: "pokemon-select-button",
+      dataset: { name: pokemonData.name.toLowerCase(), image: imageSrc },
+    });
 
-    const title = this.createCustomElement("h2", capitalize(pokemonData.name), [
-      "font-bold",
-    ]);
+    const title = this.createCustomElement({
+      tag: "h2",
+      text: capitalize(pokemonData.name),
+      classes: ["font-bold"],
+    });
 
     titleDiv.appendChild(title);
     titleDiv.appendChild(selectButton);
     titleDiv.classList.add("flex", "justify-between", "items-start");
 
     const image = document.createElement("img");
-    image.src =
-      pokemonData.sprites.versions["generation-v"]["black-white"].animated[
-        "front_default"
-      ];
+    image.src = imageSrc;
+
     image.alt = pokemonData.name;
 
     fragment.appendChild(titleDiv);
@@ -123,8 +133,14 @@ export class UI {
     if (loadingParagraph) loadingParagraph.remove();
   }
 
-  static createCustomElement(type, text = "", classes = []) {
-    const element = document.createElement(type);
+  static createCustomElement({
+    tag,
+    text = "",
+    classes = [],
+    id = "",
+    dataset = {},
+  }) {
+    const element = document.createElement(tag);
     if (text) {
       const textNode = document.createTextNode(text);
       element.appendChild(textNode);
@@ -133,6 +149,53 @@ export class UI {
     if (classes.length > 0) {
       element.classList.add(...classes);
     }
+    if (id) {
+      element.id = id;
+    }
+    if (Object.keys(dataset).length > 0) {
+      Object.keys(dataset).forEach((key) => {
+        element.dataset[key] = dataset[key];
+      });
+    }
     return element;
+  }
+
+  static appendCard(divId, card) {
+    const teamSection = document.getElementById("pokemon-team-section");
+    teamSection.classList.remove("hidden");
+
+    const gridDiv = document.getElementById("pokemon-team-grid");
+    gridDiv.appendChild(card);
+  }
+
+  static createCard(name, imageUrl) {
+    const div = document.createElement("div");
+
+    div.classList.add(
+      "border",
+      "rounded",
+      "p-2",
+      "flex",
+      "flex-col",
+      "items-center",
+      "bg-gray-50",
+      "shadow-sm",
+    );
+
+    const heading = this.createCustomElement({
+      tag: "h3",
+      text: capitalize(name),
+      classes: ["font-bold", "text-sm", "mt-2"],
+    });
+
+    const image = document.createElement("img");
+    image.src = imageUrl;
+    image.alt = name;
+    image.classList.add("w-16", "h-16"); 
+    
+    div.appendChild(image);
+    div.appendChild(heading);
+
+    return div;
   }
 }
