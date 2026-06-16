@@ -1,0 +1,41 @@
+import { retrieve, save } from "./browser-storage.js";
+
+const MAX_TEAM_SIZE = 6;
+const TEAM_KEY = "team-state";
+
+export default class Team {
+  members;
+
+  constructor(members = []) {
+    this.members = members;
+  }
+
+  static hasStored() {
+    return retrieve(TEAM_KEY);
+  }
+
+  save() {
+    save(TEAM_KEY, this.members);
+  }
+
+  load() {
+    this.members = retrieve(TEAM_KEY);
+  }
+
+  addMember({ name, imageUrl }) {
+    this.members.push({ name, imageUrl });
+  }
+
+  removeMember(memberName) {
+    this.members = this.members.filter(({ name }) => name !== memberName);
+  }
+
+  hasMember(memberName) {
+    // return this.members.find(({ name }) => name === memberName);
+    return this.members.some(({ name }) => name === memberName);
+  }
+
+  isFull() {
+    return this.members.length === MAX_TEAM_SIZE;
+  }
+}

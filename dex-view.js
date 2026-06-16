@@ -28,6 +28,9 @@ export default class DexView {
       return;
     }
 
+    if (this.infoDiv.classList.contains("hidden"))
+      this.infoDiv.classList.remove("hidden");
+
     const fragment = document.createDocumentFragment();
 
     const titleDiv = document.createElement("div");

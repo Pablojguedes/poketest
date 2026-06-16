@@ -18,7 +18,7 @@
         </div>
         <button id="pokemon-submit-button" type="submit" class="bg-blue-500 text-white p-2 rounded">Buscar</button>
     </form>
-    <div id="pokemon-info-div" class="mt-4 p-4 bg-white rounded shadow max-w-[200px]"></div>
+    <div id="pokemon-info-div" class="mt-4 p-4 bg-white rounded shadow max-w-[200px] hidden"></div>
     <div id="pokemon-team-section" class="mt-8 p-4 bg-white rounded shadow hidden">
         <h2 class="text-xl font-bold border-b pb-2 mb-4">Minha Equipe</h2>
 
@@ -30,6 +30,8 @@
     <script src="components/ui-components.js" type="module"></script>
     <script src="components/ui-feedback.js" type="module"></script>
     <script src="index.js" type="module"></script>
+    <script src="browser-storage.js" type="module"></script>
+    <script src="team.js" type="module"></script>
 </body>
 
 </html>
