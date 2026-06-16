@@ -6,16 +6,56 @@ import {
   createPElement,
   createTeamCard,
 } from "./components/ui-components.js";
+import {
+  appendError,
+  removeLoading,
+  removeError,
+  appendLoading,
+} from "./components/ui-feedback.js";
+
+const LOADING_ID = "loading-p";
+const ERROR_ID = "pokemon-input-error";
 
 export default class DexView {
   infoDiv;
   teamDiv;
   teamGrid;
+  nameInput;
 
-  constructor(infoDivId, teamDivId, teamGridId) {
+  constructor({ infoDivId, teamDivId, teamGridId, nameInputId }) {
     this.infoDiv = document.getElementById(infoDivId);
     this.teamDiv = document.getElementById(teamDivId);
     this.teamGrid = document.getElementById(teamGridId);
+    this.nameInput = document.getElementById(nameInputId);
+
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    this.infoDiv.addEventListener("click", (e) => {
+      if (e.target.dataset.action === "add") {
+        const pokemonName = e.target.dataset.name;
+        const imageUrl = e.target.dataset.image;
+
+        document.dispatchEvent(
+          new CustomEvent("pokemon:add-to-team", {
+            detail: { name: pokemonName, image: imageUrl },
+          }),
+        );
+        return;
+      }
+    });
+    document.addEventListener("click", (e) => {
+      if (e.target === this.nameInput) return;
+      removeError({
+        element: this.nameInput,
+        errorParId: ERROR_ID,
+      });
+    });
+  }
+
+  getSearchValue() {
+    return this.nameInput.value;
   }
 
   displayPokemonData(pokemonData) {
@@ -55,7 +95,11 @@ export default class DexView {
         "transition-colors",
       ],
       id: "pokemon-select-button",
-      dataset: { name: pokemonData.name.toLowerCase(), image: imageSrc },
+      dataset: {
+        name: pokemonData.name.toLowerCase(),
+        image: imageSrc,
+        action: "add",
+      },
     });
 
     const title = createCustomElement({
@@ -91,5 +135,25 @@ export default class DexView {
 
     const card = createTeamCard(name, image);
     this.teamGrid.appendChild(card);
+  }
+
+  addErrorMessage() {
+    appendError({
+      element: this.nameInput,
+      errorParId: ERROR_ID,
+      message: "O nome não pode ser vazio",
+    });
+  }
+
+  showLoading() {
+    appendLoading({
+      element: this.infoDiv,
+      text: "Carregando...",
+      loadingParId: LOADING_ID,
+    });
+  }
+
+  hideLoading() {
+    removeLoading({ loadingParId: LOADING_ID });
   }
 }

@@ -1,48 +1,37 @@
 import { createErrorParagraph } from "./ui-components.js";
 
-export function addErrorMessage(
-  inputIdentifier,
-  errorIdentifier,
-  errorMessage,
-) {
-  const pokemonInput = document.getElementById(inputIdentifier);
-
-  if (!pokemonInput.classList.contains("border-red-500")) {
-    pokemonInput.classList.add("border-red-500");
+export function appendError({ element, errorParId, message }) {
+  if (!element.classList.contains("border-red-500")) {
+    element.classList.add("border-red-500");
   }
 
-  if (!document.getElementById(errorIdentifier)) {
-    const invalidFormParagraph = createErrorParagraph(errorMessage, [
-      "text-sm",
-    ]);
+  if (!document.getElementById(errorParId)) {
+    const errorMessagePar = createErrorParagraph(message, ["text-sm"]);
 
-    invalidFormParagraph.id = errorIdentifier;
-    pokemonInput.insertAdjacentElement("afterend", invalidFormParagraph);
+    errorMessagePar.id = errorParId;
+    element.insertAdjacentElement("afterend", errorMessagePar);
   }
 }
 
-export function removeErrorMessage(inputIdentifier, errorIdentifier) {
-  const pokemonInput = document.getElementById(inputIdentifier);
+export function removeError({ element, errorParId }) {
+  if (element.classList.contains("border-red-500"))
+    element.classList.remove("border-red-500");
 
-  if (pokemonInput.classList.contains("border-red-500"))
-    pokemonInput.classList.remove("border-red-500");
-
-  const invalidFormPar = document.getElementById(errorIdentifier);
+  const invalidFormPar = document.getElementById(errorParId);
   if (invalidFormPar) {
     invalidFormPar.remove();
   }
 }
 
-export function showLoading(parent, text, childId) {
-  const pokemonInfoDiv = document.getElementById(parent);
+export function appendLoading({ element, text, loadingParId }) {
   const loadingParagraph = document.createElement("p");
   const loadingText = document.createTextNode(text);
   loadingParagraph.appendChild(loadingText);
-  loadingParagraph.id = childId;
-  pokemonInfoDiv.replaceChildren(loadingParagraph);
+  loadingParagraph.id = loadingParId;
+  element.replaceChildren(loadingParagraph);
 }
 
-export function hideLoading(childId) {
-  const loadingParagraph = document.getElementById(childId);
+export function removeLoading({ loadingParId }) {
+  const loadingParagraph = document.getElementById(loadingParId);
   if (loadingParagraph) loadingParagraph.remove();
 }
