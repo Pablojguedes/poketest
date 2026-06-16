@@ -14,7 +14,8 @@ import {
 } from "./components/ui-feedback.js";
 
 const LOADING_ID = "loading-p";
-const ERROR_ID = "pokemon-input-error";
+const INPUT_ERROR_ID = "pokemon-input-error";
+const TEAM_ERROR_ID = "pokemon-team-error";
 
 export default class DexView {
   infoDiv;
@@ -49,8 +50,10 @@ export default class DexView {
       if (e.target === this.nameInput) return;
       removeError({
         element: this.nameInput,
-        errorParId: ERROR_ID,
+        errorParId: INPUT_ERROR_ID,
       });
+      if (e.target.dataset.action === "add") return;
+      removeError({ element: this.infoDiv, errorParId: TEAM_ERROR_ID });
     });
   }
 
@@ -140,8 +143,16 @@ export default class DexView {
   addErrorMessage() {
     appendError({
       element: this.nameInput,
-      errorParId: ERROR_ID,
+      errorParId: INPUT_ERROR_ID,
       message: "O nome não pode ser vazio",
+    });
+  }
+
+  addTeamErrorMessage(name) {
+    appendError({
+      element: this.infoDiv,
+      errorParId: TEAM_ERROR_ID,
+      message: `${capitalize(name)} já está na sua equipe!`,
     });
   }
 

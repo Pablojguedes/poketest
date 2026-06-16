@@ -60,6 +60,7 @@ document.addEventListener("pokemon:add-to-team", function (event) {
   } = event;
 
   if (team.hasMember(name)) {
+    dexView.addTeamErrorMessage(name);
     return;
   }
 
