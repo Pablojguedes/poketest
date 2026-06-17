@@ -80,6 +80,11 @@ document.addEventListener("pokemon:add-to-team", function (event) {
   team.save();
 
   dexView.appendCard(name, image);
+
+  dexView.hidePokemonData();
+  dexView.clearSearchInput();
+
+  lastSearchedPokemon = "";
 });
 
 document.addEventListener("pokemon:remove-from-team", function (event) {

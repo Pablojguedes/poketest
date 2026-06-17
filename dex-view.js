@@ -140,6 +140,15 @@ export default class DexView {
     this.infoDiv.replaceChildren(fragment);
   }
 
+  hidePokemonData() {
+    this.infoDiv.replaceChildren();
+    this.infoDiv.classList.add("hidden");
+  }
+
+  clearSearchInput() {
+    this.nameInput.value = "";
+  }
+
   showFetchError(message) {
     this.infoDiv.classList.remove("hidden");
     const errorParagraph = createErrorParagraph(message);
