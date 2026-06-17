@@ -62,17 +62,7 @@ export default class DexView {
   }
 
   displayPokemonData(pokemonData) {
-    if (!pokemonData) {
-      const errorParagraph = createErrorParagraph(
-        "Pokémon não encontrado. Tente outro nome!",
-      );
-
-      this.infoDiv.replaceChildren(errorParagraph);
-      return;
-    }
-
-    if (this.infoDiv.classList.contains("hidden"))
-      this.infoDiv.classList.remove("hidden");
+    this.infoDiv.classList.remove("hidden");
 
     const fragment = document.createDocumentFragment();
 
@@ -133,6 +123,13 @@ export default class DexView {
     this.infoDiv.replaceChildren(fragment);
   }
 
+  showFetchError(message) {
+    this.infoDiv.classList.remove("hidden");
+    const errorParagraph = createErrorParagraph(message);
+
+    this.infoDiv.replaceChildren(errorParagraph);
+  }
+
   appendCard(name, image) {
     this.teamDiv.classList.remove("hidden");
 
@@ -157,6 +154,7 @@ export default class DexView {
   }
 
   showLoading() {
+    this.infoDiv.classList.remove("hidden");
     appendLoading({
       element: this.infoDiv,
       text: "Carregando...",

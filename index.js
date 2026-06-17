@@ -20,17 +20,14 @@ if (Team.hasStored()) {
 }
 
 async function fetchPokemonData(pokemonName) {
-  try {
-    const response = await fetch(`${POKEAPI_URL}${pokemonName.toLowerCase()}`);
-    if (!response.ok) {
-      throw new Error("Pokémon não encontrado");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-    return null;
+  const response = await fetch(`${POKEAPI_URL}${pokemonName.toLowerCase()}`);
+  if (!response.ok) {
+    const error = new Error();
+    error.status = response.status;
+    throw error;
   }
+
+  return await response.json();
 }
 
 document
@@ -49,6 +46,13 @@ document
     try {
       const pokemonData = await fetchPokemonData(pokemonName);
       dexView.displayPokemonData(pokemonData);
+    } catch (error) {      
+      if (error.status === 404)
+        dexView.showFetchError("Pokémon não encontrado");
+      else
+        dexView.showFetchError(
+          "Ocorreu um erro desconhecido. Tente novamente mais tarde",
+        );
     } finally {
       dexView.hideLoading();
     }

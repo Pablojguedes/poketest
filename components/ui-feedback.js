@@ -1,9 +1,7 @@
 import { createErrorParagraph } from "./ui-components.js";
 
 export function appendError({ element, errorParId, message }) {
-  if (!element.classList.contains("border-red-500")) {
-    element.classList.add("border-red-500");
-  }
+  element.classList.add("border", "border-red-500");
 
   if (!document.getElementById(errorParId)) {
     const errorMessagePar = createErrorParagraph(message, ["text-sm"]);
@@ -14,8 +12,7 @@ export function appendError({ element, errorParId, message }) {
 }
 
 export function removeError({ element, errorParId }) {
-  if (element.classList.contains("border-red-500"))
-    element.classList.remove("border-red-500");
+  element.classList.remove("border", "border-red-500");
 
   const invalidFormPar = document.getElementById(errorParId);
   if (invalidFormPar) {
