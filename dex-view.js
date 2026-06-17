@@ -47,6 +47,7 @@ export default class DexView {
         return;
       }
     });
+
     document.addEventListener("click", (e) => {
       if (e.target === this.nameInput) return;
       removeError({
@@ -56,6 +57,20 @@ export default class DexView {
       if (e.target.dataset.action === "add") return;
       removeError({ element: this.infoDiv, errorParId: TEAM_ERROR_ID });
       removeError({ element: this.teamDiv, errorParId: FULL_TEAM_ERROR_ID });
+    });
+
+    this.teamGrid.addEventListener("click", (e) => {
+      const cardDiv = e.target.closest("[data-name]");
+      if (!cardDiv) return;
+      const {
+        dataset: { name },
+      } = cardDiv;
+
+      document.dispatchEvent(
+        new CustomEvent("pokemon:remove-from-team", {
+          detail: { name },
+        }),
+      );
     });
   }
 
@@ -132,13 +147,6 @@ export default class DexView {
     this.infoDiv.replaceChildren(errorParagraph);
   }
 
-  appendCard(name, image) {
-    this.teamDiv.classList.remove("hidden");
-
-    const card = createTeamCard(name, image);
-    this.teamGrid.appendChild(card);
-  }
-
   addErrorMessage() {
     appendError({
       element: this.nameInput,
@@ -174,5 +182,17 @@ export default class DexView {
 
   hideLoading() {
     removeLoading({ loadingParId: LOADING_ID });
+  }
+
+  appendCard(name, image) {
+    this.teamDiv.classList.remove("hidden");
+
+    const card = createTeamCard(name, image);
+    this.teamGrid.appendChild(card);
+  }
+
+  removeCard(name) {
+    const card = this.teamGrid.querySelector(`[data-name=${name}]`);
+    if (card) card.remove();
   }
 }

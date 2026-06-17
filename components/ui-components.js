@@ -26,6 +26,8 @@ export function createErrorParagraph(text, extraClasses = []) {
 export function createTeamCard(name, imageUrl) {
   const div = document.createElement("div");
 
+  div.dataset.name = name;
+
   div.classList.add(
     "border",
     "rounded",

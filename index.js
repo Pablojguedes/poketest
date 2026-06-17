@@ -78,3 +78,16 @@ document.addEventListener("pokemon:add-to-team", function (event) {
 
   dexView.appendCard(name, image);
 });
+
+document.addEventListener("pokemon:remove-from-team", function (event) {
+  const {
+    detail: { name },
+  } = event;
+
+  if (confirm(`Você deseja remover ${name} da sua equipe?`)) {
+    team.removeMember(name);
+    team.save();
+
+    dexView.removeCard(name);
+  }
+});
