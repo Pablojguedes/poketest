@@ -38,4 +38,8 @@ export default class Team {
   isFull() {
     return this.members.length === MAX_TEAM_SIZE;
   }
+
+  isEmpty() {
+    return this.members.length === 0;
+  }
 }

@@ -89,5 +89,7 @@ document.addEventListener("pokemon:remove-from-team", function (event) {
     team.save();
 
     dexView.removeCard(name);
+
+    if (team.isEmpty()) dexView.hideTeamSection();
   }
 });

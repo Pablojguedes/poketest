@@ -195,4 +195,8 @@ export default class DexView {
     const card = this.teamGrid.querySelector(`[data-name=${name}]`);
     if (card) card.remove();
   }
+
+  hideTeamSection() {
+    this.teamDiv.classList.add("hidden");
+  }
 }
