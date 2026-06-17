@@ -1,6 +1,7 @@
 import DexView from "./dex-view.js";
 import Team from "./team.js";
 
+let lastSearchedPokemon = "";
 const POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon/";
 
 const dexView = new DexView({
@@ -41,8 +42,10 @@ document
       dexView.addErrorMessage();
       return;
     }
-    dexView.showLoading();
+    if (lastSearchedPokemon === pokemonName) return;
 
+    lastSearchedPokemon = pokemonName;
+    dexView.showLoading();
     try {
       const pokemonData = await fetchPokemonData(pokemonName);
       dexView.displayPokemonData(pokemonData);
