@@ -16,6 +16,7 @@ import {
 const LOADING_ID = "loading-p";
 const INPUT_ERROR_ID = "pokemon-input-error";
 const TEAM_ERROR_ID = "pokemon-team-error";
+const FULL_TEAM_ERROR_ID = "team-full-error";
 
 export default class DexView {
   infoDiv;
@@ -54,6 +55,7 @@ export default class DexView {
       });
       if (e.target.dataset.action === "add") return;
       removeError({ element: this.infoDiv, errorParId: TEAM_ERROR_ID });
+      removeError({ element: this.teamDiv, errorParId: FULL_TEAM_ERROR_ID });
     });
   }
 
@@ -150,6 +152,14 @@ export default class DexView {
       element: this.infoDiv,
       errorParId: TEAM_ERROR_ID,
       message: `${capitalize(name)} já está na sua equipe!`,
+    });
+  }
+
+  addFullErrorMessage() {
+    appendError({
+      element: this.teamDiv,
+      errorParId: FULL_TEAM_ERROR_ID,
+      message: "Sua equipe já está cheia!",
     });
   }
 

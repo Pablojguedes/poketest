@@ -46,7 +46,7 @@ document
     try {
       const pokemonData = await fetchPokemonData(pokemonName);
       dexView.displayPokemonData(pokemonData);
-    } catch (error) {      
+    } catch (error) {
       if (error.status === 404)
         dexView.showFetchError("Pokémon não encontrado");
       else
@@ -63,12 +63,13 @@ document.addEventListener("pokemon:add-to-team", function (event) {
     detail: { name, image },
   } = event;
 
-  if (team.hasMember(name)) {
-    dexView.addTeamErrorMessage(name);
+  if (team.isFull()) {
+    dexView.addFullErrorMessage();
     return;
   }
 
-  if (team.isFull()) {
+  if (team.hasMember(name)) {
+    dexView.addTeamErrorMessage(name);
     return;
   }
 

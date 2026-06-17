@@ -16,7 +16,7 @@
         <div id="pokemon-input-div" class="flex flex-col">
             <input type="text" id="pokemon-name-input" placeholder="Pikachu, Charizard..." class="border p-2 rounded">
         </div>
-        <button id="pokemon-submit-button" type="submit" class="bg-blue-500 text-white p-2 rounded">Buscar</button>
+        <button id="pokemon-submit-button" type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Buscar</button>
     </form>
     <div id="pokemon-info-div" class="mt-4 p-4 bg-white rounded shadow max-w-[200px] hidden"></div>
     <div id="pokemon-team-section" class="mt-8 p-4 bg-white rounded shadow hidden">
