@@ -68,11 +68,11 @@ export default class DexView {
         dataset: { name },
       } = cardDiv;
 
-      document.dispatchEvent(
-        new CustomEvent("pokemon:remove-from-team", {
-          detail: { name },
-        }),
-      );
+      const eventName = e.target.closest('[data-action="remove"]')
+        ? "pokemon:remove-from-team"
+        : "modal:open";
+
+      document.dispatchEvent(new CustomEvent(eventName, { detail: { name } }));
     });
   }
 

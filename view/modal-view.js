@@ -4,7 +4,7 @@ export default class MovesModalView {
   closeButton;
   selectInput;
 
-  constructor({dialogId}) {
+  constructor({ dialogId }) {
     this.dialog = document.getElementById(dialogId);
 
     this.addButton = this.dialog.querySelector("#modal-add-button");
@@ -15,7 +15,10 @@ export default class MovesModalView {
   }
 
   bindEvents() {
-    // this.dialog.addEventListener("click");
+    this.addButton.addEventListener("click", (e) => {});
+    this.closeButton.addEventListener("click", (e) => {
+      this.close();
+    });
   }
 
   open() {

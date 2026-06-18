@@ -24,21 +24,22 @@ export function createErrorParagraph(text, extraClasses = []) {
 }
 
 export function createTeamCard({ name, imageSrc }) {
-  const div = document.createElement("div");
-
-  div.dataset.name = name;
-
-  div.classList.add(
-    "border",
-    "rounded",
-    "p-2",
-    "flex",
-    "flex-col",
-    "items-center",
-    "bg-gray-50",
-    "shadow-sm",
-    "cursor-pointer",
-  );
+  const div = createCustomElement({
+    tag: "div",
+    classes: [
+      "relative", // <-- O PULO DO GATO 1: Parent precisa ser relative
+      "border",
+      "rounded",
+      "p-2",
+      "flex",
+      "flex-col",
+      "items-center",
+      "bg-gray-50",
+      "shadow-sm",
+      "cursor-pointer",
+    ],
+    dataset: { name },
+  });
 
   const heading = createCustomElement({
     tag: "h3",
@@ -48,8 +49,33 @@ export function createTeamCard({ name, imageSrc }) {
 
   const image = createImage(imageSrc, capitalize(name), ["w-16", "h-16"]);
 
+  const removeButton = createCustomElement({
+    tag: "button",
+    text: "x",
+    classes: [
+      "absolute",
+      "-top-2",
+      "-right-2",
+      "bg-red-500",
+      "text-white",
+      "w-5",
+      "h-5",
+      "text-xs",
+      "font-bold",
+      "flex",
+      "items-center",
+      "justify-center",
+      "rounded-full",
+      "hover:bg-red-600",
+      "transition-colors",
+      "shadow-md",
+    ],
+    dataset: { name, action: "remove" },
+  });
+
   div.appendChild(image);
   div.appendChild(heading);
+  div.appendChild(removeButton);
 
   return div;
 }

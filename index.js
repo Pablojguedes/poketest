@@ -119,3 +119,7 @@ document.addEventListener("pokemon:remove-from-team", function (event) {
     if (team.isEmpty()) dexView.hideTeamSection();
   }
 });
+
+document.addEventListener("modal:open", function (event) {
+  movesModal.open();
+});
