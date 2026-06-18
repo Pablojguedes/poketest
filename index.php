@@ -31,7 +31,7 @@
     <script src="components/ui-feedback.js" type="module"></script>
     <script src="index.js" type="module"></script>
     <script src="browser-storage.js" type="module"></script>
-    <script src="team.js" type="module"></script>
+    <script src="domain/team.js" type="module"></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-import { retrieve, save } from "./browser-storage.js";
+import { retrieve, save } from "../browser-storage.js";
 
 const MAX_TEAM_SIZE = 6;
 const TEAM_KEY = "team-state";
@@ -22,8 +22,8 @@ export default class Team {
     this.members = retrieve(TEAM_KEY);
   }
 
-  addMember({ name, imageUrl }) {
-    this.members.push({ name, imageUrl });
+  addMember({ name, imageSrc }) {
+    this.members.push({ name, imageSrc });
   }
 
   removeMember(memberName) {

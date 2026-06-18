@@ -37,14 +37,15 @@ export default class DexView {
   bindEvents() {
     this.infoDiv.addEventListener("click", (e) => {
       if (e.target.dataset.action === "add") {
-        const pokemonName = e.target.dataset.name;
-        const imageUrl = e.target.dataset.image;
+        // const pokemonName = e.target.dataset.name;
+        // const imageUrl = e.target.dataset.image;
 
-        document.dispatchEvent(
-          new CustomEvent("pokemon:add-to-team", {
-            detail: { name: pokemonName, image: imageUrl },
-          }),
-        );
+        // document.dispatchEvent(
+        //   new CustomEvent("pokemon:add-to-team", {
+        //     detail: { name: pokemonName, image: imageUrl },
+        //   }),
+        // );
+        document.dispatchEvent(new Event("pokemon:add-to-team"));
         return;
       }
     });
@@ -140,10 +141,10 @@ export default class DexView {
     removeLoading({ loadingParId: LOADING_ID });
   }
 
-  appendCard(name, image) {
+  appendCard(pokemon) {
     this.teamDiv.classList.remove("hidden");
 
-    const card = createTeamCard(name, image);
+    const card = createTeamCard(pokemon);
     this.teamGrid.appendChild(card);
   }
 

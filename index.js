@@ -1,7 +1,10 @@
 import DexView from "./dex-view.js";
-import Team from "./team.js";
+import Pokemon from "./domain/pokemon.js";
+import Team from "./domain/team.js";
 
 let lastSearchedPokemon = "";
+let activePokemon;
+
 const POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon/";
 
 const dexView = new DexView({
@@ -15,9 +18,7 @@ const team = new Team([]);
 if (Team.hasStored()) {
   team.load();
 
-  team.members.forEach(({ name, imageUrl }) =>
-    dexView.appendCard(name, imageUrl),
-  );
+  team.members.forEach((pokemon) => dexView.appendCard(pokemon));
 }
 
 async function fetchPokemonData(pokemonName) {
@@ -49,18 +50,18 @@ document
     try {
       const pokemonData = await fetchPokemonData(pokemonName);
       const { name, sprites, height, weight, types } = pokemonData;
-
-      const cleanData = {
+      const pokemon = new Pokemon(
         name,
-        imageSrc:
-          sprites.versions["generation-v"]["black-white"].animated[
-            "front_default"
-          ],
+        sprites.versions["generation-v"]["black-white"].animated[
+          "front_default"
+        ],
         weight,
         height,
-        types: types.map((type) => type.type.name).join(", "),
-      };
-      dexView.displayPokemonData(cleanData);
+        types.map((type) => type.type.name),
+      );
+      activePokemon = pokemon;
+
+      dexView.displayPokemonData(pokemon);
     } catch (error) {
       if (error.status === 404)
         dexView.showFetchError("Pokémon não encontrado");
@@ -74,24 +75,24 @@ document
   });
 
 document.addEventListener("pokemon:add-to-team", function (event) {
-  const {
-    detail: { name, image },
-  } = event;
+  // const {
+  //   detail: { name, image },
+  // } = event;
 
   if (team.isFull()) {
     dexView.addFullErrorMessage();
     return;
   }
 
-  if (team.hasMember(name)) {
-    dexView.addTeamErrorMessage(name);
+  if (team.hasMember(activePokemon.name)) {
+    dexView.addTeamErrorMessage(activePokemon.name);
     return;
   }
 
-  team.addMember({ name, imageUrl: image });
+  team.addMember(activePokemon);
   team.save();
 
-  dexView.appendCard(name, image);
+  dexView.appendCard(activePokemon);
 
   dexView.hidePokemonData();
   dexView.clearSearchInput();

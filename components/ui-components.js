@@ -23,7 +23,7 @@ export function createErrorParagraph(text, extraClasses = []) {
   return errorParagraph;
 }
 
-export function createTeamCard(name, imageUrl) {
+export function createTeamCard({ name, imageSrc }) {
   const div = document.createElement("div");
 
   div.dataset.name = name;
@@ -46,7 +46,7 @@ export function createTeamCard(name, imageUrl) {
     classes: ["font-bold", "text-sm", "mt-2"],
   });
 
-  const image = createImage(imageUrl, capitalize(name), ["w-16", "h-16"]);
+  const image = createImage(imageSrc, capitalize(name), ["w-16", "h-16"]);
 
   div.appendChild(image);
   div.appendChild(heading);
@@ -133,7 +133,7 @@ export function createDisplayCard({ name, imageSrc, weight, height, types }) {
   fragment.appendChild(image);
   fragment.appendChild(createPElement("Height", height));
   fragment.appendChild(createPElement("Weight", weight));
-  fragment.appendChild(createPElement("Types", types));
+  fragment.appendChild(createPElement("Types", types.join(", ")));
 
   return fragment;
 }
