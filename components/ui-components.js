@@ -89,4 +89,51 @@ export function createImage(imageSrc, imageAlt, classes = []) {
   return image;
 }
 
-export function createDisplayCard() {}
+export function createDisplayCard({ name, imageSrc, weight, height, types }) {
+  const fragment = document.createDocumentFragment();
+
+  const titleDiv = document.createElement("div");
+
+  const selectButton = createCustomElement({
+    tag: "button",
+    text: "+",
+    classes: [
+      "bg-blue-500",
+      "text-white",
+      "w-8",
+      "h-8",
+      "flex",
+      "items-center",
+      "justify-center",
+      "rounded-full",
+      "hover:bg-blue-600",
+      "transition-colors",
+    ],
+    id: "pokemon-select-button",
+    dataset: {
+      name: name.toLowerCase(),
+      image: imageSrc,
+      action: "add",
+    },
+  });
+
+  const title = createCustomElement({
+    tag: "h2",
+    text: capitalize(name),
+    classes: ["font-bold"],
+  });
+
+  titleDiv.appendChild(title);
+  titleDiv.appendChild(selectButton);
+  titleDiv.classList.add("flex", "justify-between", "items-start");
+
+  const image = createImage(imageSrc, capitalize(name), ["w-16", "h-16"]);
+
+  fragment.appendChild(titleDiv);
+  fragment.appendChild(image);
+  fragment.appendChild(createPElement("Height", height));
+  fragment.appendChild(createPElement("Weight", weight));
+  fragment.appendChild(createPElement("Types", types));
+
+  return fragment;
+}
