@@ -78,17 +78,13 @@ export default class DexView {
     return this.nameInput.value;
   }
 
-  displayPokemonData(pokemonData) {
+  displayPokemonData({ name, imageSrc, weight, height, types }) {
     this.infoDiv.classList.remove("hidden");
 
     const fragment = document.createDocumentFragment();
 
     const titleDiv = document.createElement("div");
 
-    const imageSrc =
-      pokemonData.sprites.versions["generation-v"]["black-white"].animated[
-        "front_default"
-      ];
     const selectButton = createCustomElement({
       tag: "button",
       text: "+",
@@ -106,7 +102,7 @@ export default class DexView {
       ],
       id: "pokemon-select-button",
       dataset: {
-        name: pokemonData.name.toLowerCase(),
+        name: name.toLowerCase(),
         image: imageSrc,
         action: "add",
       },
@@ -114,7 +110,7 @@ export default class DexView {
 
     const title = createCustomElement({
       tag: "h2",
-      text: capitalize(pokemonData.name),
+      text: capitalize(name),
       classes: ["font-bold"],
     });
 
@@ -122,21 +118,13 @@ export default class DexView {
     titleDiv.appendChild(selectButton);
     titleDiv.classList.add("flex", "justify-between", "items-start");
 
-    const image = createImage(imageSrc, capitalize(pokemonData.name), [
-      "w-16",
-      "h-16",
-    ]);
+    const image = createImage(imageSrc, capitalize(name), ["w-16", "h-16"]);
 
     fragment.appendChild(titleDiv);
     fragment.appendChild(image);
-    fragment.appendChild(createPElement("Height", pokemonData.height));
-    fragment.appendChild(createPElement("Weight", pokemonData.weight));
-    fragment.appendChild(
-      createPElement(
-        "Types",
-        pokemonData.types.map((type) => type.type.name).join(", "),
-      ),
-    );
+    fragment.appendChild(createPElement("Height", height));
+    fragment.appendChild(createPElement("Weight", weight));
+    fragment.appendChild(createPElement("Types", types));
     this.infoDiv.replaceChildren(fragment);
   }
 

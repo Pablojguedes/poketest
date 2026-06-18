@@ -48,7 +48,19 @@ document
     dexView.showLoading();
     try {
       const pokemonData = await fetchPokemonData(pokemonName);
-      dexView.displayPokemonData(pokemonData);
+      const { name, sprites, height, weight, types } = pokemonData;
+
+      const cleanData = {
+        name,
+        imageSrc:
+          sprites.versions["generation-v"]["black-white"].animated[
+            "front_default"
+          ],
+        weight,
+        height,
+        types: types.map((type) => type.type.name).join(", "),
+      };
+      dexView.displayPokemonData(cleanData);
     } catch (error) {
       if (error.status === 404)
         dexView.showFetchError("Pokémon não encontrado");

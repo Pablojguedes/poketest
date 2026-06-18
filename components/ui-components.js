@@ -37,6 +37,7 @@ export function createTeamCard(name, imageUrl) {
     "items-center",
     "bg-gray-50",
     "shadow-sm",
+    "cursor-pointer",
   );
 
   const heading = createCustomElement({
@@ -87,3 +88,5 @@ export function createImage(imageSrc, imageAlt, classes = []) {
   image.classList.add(...classes);
   return image;
 }
+
+export function createDisplayCard() {}
