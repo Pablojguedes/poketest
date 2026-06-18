@@ -1,4 +1,4 @@
-import { capitalize } from "./util.js";
+import { capitalize } from "../util.js";
 import {
   createCustomElement,
   createDisplayCard,
@@ -6,13 +6,13 @@ import {
   createImage,
   createPElement,
   createTeamCard,
-} from "./components/ui-components.js";
+} from "../components/ui-components.js";
 import {
   appendError,
   removeLoading,
   removeError,
   appendLoading,
-} from "./components/ui-feedback.js";
+} from "../components/ui-feedback.js";
 
 const LOADING_ID = "loading-p";
 const INPUT_ERROR_ID = "pokemon-input-error";

@@ -1,3 +1,4 @@
+const MAX_MOVES = 4;
 export default class Pokemon {
   name;
   imageSrc;
@@ -14,4 +15,12 @@ export default class Pokemon {
     this.types = types;
     this.moves = moves;
   }
+
+  moveslotIsFull() {
+    return this.moves === MAX_MOVES;
+  }
+
+  addMove() {}
+
+  removeMove() {}
 }

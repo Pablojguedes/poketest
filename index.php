@@ -25,8 +25,28 @@
         <div id="pokemon-team-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
         </div>
     </div>
+    <dialog id="moves-modal" class="w-[90vw] max-w-md p-6 border-none rounded-2xl shadow-2xl backdrop:bg-gray-900/60 open:animate-fade-in">
+        <div class="mb-5">
+            <h2 class="text-2xl font-extrabold text-gray-800">Ataques</h2>
+            <p class="text-sm text-gray-500 mt-1">Escolha até 4 ataques para sua equipe.</p>
+        </div>
+
+        <select id="moves-select" class="w-full border border-gray-300 rounded-lg p-3 mb-6 text-gray-700 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+            <option value="" disabled selected>Selecione um ataque...</option>
+        </select>
+
+        <div class="flex justify-end space-x-3 mt-2">
+            <button id="modal-close-button" class="px-4 py-2 rounded-lg font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors">
+                Fechar
+            </button>
+            <button id="modal-add-button" class="px-4 py-2 rounded-lg font-semibold text-white bg-blue-500 hover:bg-blue-600 transition-colors shadow-sm">
+                Adicionar
+            </button>
+        </div>
+    </dialog>
     <script src="util.js" type="module"></script>
-    <script src="dex-view.js" type="module"></script>
+    <script src="/view/dex-view.js" type="module"></script>
+    <script src="/view/modal-view.js" type="module"></script>
     <script src="components/ui-components.js" type="module"></script>
     <script src="components/ui-feedback.js" type="module"></script>
     <script src="index.js" type="module"></script>

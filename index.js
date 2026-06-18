@@ -1,12 +1,16 @@
-import DexView from "./dex-view.js";
+import DexView from "./view/dex-view.js";
 import Pokemon from "./domain/pokemon.js";
 import Team from "./domain/team.js";
+import ModalView from "./view/modal-view.js";
 
 let lastSearchedPokemon = "";
 let activePokemon;
 
 const POKEAPI_URL = "https://pokeapi.co/api/v2/pokemon/";
 
+const movesModal = new ModalView({
+  dialogId: "moves-modal",
+});
 const dexView = new DexView({
   infoDivId: "pokemon-info-div",
   teamDivId: "pokemon-team-section",
@@ -50,15 +54,16 @@ document
     try {
       const pokemonData = await fetchPokemonData(pokemonName);
       const { name, sprites, height, weight, types } = pokemonData;
-      const pokemon = new Pokemon(
+      const pokemon = new Pokemon({
         name,
-        sprites.versions["generation-v"]["black-white"].animated[
-          "front_default"
-        ],
+        imageSrc:
+          sprites.versions["generation-v"]["black-white"].animated[
+            "front_default"
+          ],
         weight,
         height,
-        types.map((type) => type.type.name),
-      );
+        types: types.map((type) => type.type.name),
+      });
       activePokemon = pokemon;
 
       dexView.displayPokemonData(pokemon);
