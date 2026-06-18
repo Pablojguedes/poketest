@@ -22,8 +22,8 @@ export default class Team {
     this.members = retrieve(TEAM_KEY);
   }
 
-  addMember({ name, imageSrc }) {
-    this.members.push({ name, imageSrc });
+  addMember(pokemon) {
+    this.members.push(pokemon);
   }
 
   removeMember(memberName) {

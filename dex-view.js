@@ -80,10 +80,10 @@ export default class DexView {
     return this.nameInput.value;
   }
 
-  displayPokemonData(cleanData) {
+  displayPokemonData(pokemon) {
     this.infoDiv.classList.remove("hidden");
 
-    const infoCard = createDisplayCard(cleanData);
+    const infoCard = createDisplayCard(pokemon);
 
     this.infoDiv.replaceChildren(infoCard);
   }
@@ -149,7 +149,7 @@ export default class DexView {
   }
 
   removeCard(name) {
-    const card = this.teamGrid.querySelector(`[data-name=${name}]`);
+    const card = this.teamGrid.querySelector(`[data-name="${name}"]`);
     if (card) card.remove();
   }
 
