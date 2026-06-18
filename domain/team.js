@@ -1,4 +1,5 @@
 import { retrieve, save } from "../browser-storage.js";
+import Pokemon from "./pokemon.js";
 
 const MAX_TEAM_SIZE = 6;
 const TEAM_KEY = "team-state";
@@ -19,7 +20,9 @@ export default class Team {
   }
 
   load() {
-    this.members = retrieve(TEAM_KEY);
+    const rawMembers = retrieve(TEAM_KEY) || [];
+
+    this.members = rawMembers.map((raw) => new Pokemon(raw));
   }
 
   addMember(pokemon) {

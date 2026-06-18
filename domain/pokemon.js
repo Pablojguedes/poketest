@@ -6,7 +6,7 @@ export default class Pokemon {
   types;
   moves;
 
-  constructor(name, imageSrc, height, weight, types = [], moves = []) {
+  constructor({ name, imageSrc, height, weight, types = [], moves = [] }) {
     this.name = name;
     this.imageSrc = imageSrc;
     this.height = height;
