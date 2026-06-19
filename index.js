@@ -80,10 +80,6 @@ document
   });
 
 document.addEventListener("pokemon:add-to-team", function (event) {
-  // const {
-  //   detail: { name, image },
-  // } = event;
-
   if (team.isFull()) {
     dexView.addFullErrorMessage();
     return;
@@ -120,6 +116,26 @@ document.addEventListener("pokemon:remove-from-team", function (event) {
   }
 });
 
-document.addEventListener("modal:open", function (event) {
+document.addEventListener("modal:open", async function (event) {
+  const {
+    detail: { name },
+  } = event;
+  //TODO: ADICIONAR LOGICA DE LISTA DE MOVES NO MODAL
+  movesModal.showLoading();
+  try {
+    const pokemonData = await fetchPokemonData(name);
+    const { moves } = pokemonData;
+    const movesList = moves.map(({ name }) => name);
+  } catch (error) {
+    if (error.status === 404)
+      movesModal.showFetchError("Pokémon não encontrado");
+    else
+      movesModal.showFetchError(
+        "Ocorreu um erro desconhecido. Tente novamente mais tarde",
+      );
+  } finally {
+    movesModal.hideLoading();
+  }
+
   movesModal.open();
 });

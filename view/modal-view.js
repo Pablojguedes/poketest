@@ -28,4 +28,10 @@ export default class MovesModalView {
   close() {
     this.dialog.close();
   }
+
+  showLoading() {}
+
+  hideLoading() {}
+
+  showFetchError() {}
 }
