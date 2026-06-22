@@ -139,13 +139,24 @@ document.addEventListener("modal:open", async function (event) {
     movesModal.hideLoading();
   }
 
-  movesModal.open();
+  movesModal.open(name);
 });
 
 document.addEventListener("pokemon:add-attack", function (event) {
   const {
-    detail: { name, moves },
+    detail: { name, moves = [] },
   } = event;
-  
-  
+
+  if (!team.hasMember(name)) return;
+
+  const pokemon = team.members.find((member) => member.name === name);
+
+  pokemon.moves = [];
+
+  moves.forEach((move) => {
+    const added = pokemon.addMove(move);
+    if (!added) movesModal.showFetchError("O pokemon já possui 4 ataques!");
+  });
+
+  team.save();
 });

@@ -37,7 +37,7 @@ export default class MovesModalView {
       );
       document.dispatchEvent(
         new CustomEvent("pokemon:add-attack", {
-          detail: { name: this.currentPokemonName, moves },
+          detail: { name: this.currentPokemonName, moves: movesTexts },
         }),
       );
     });

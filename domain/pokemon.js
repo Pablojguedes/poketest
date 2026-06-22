@@ -17,10 +17,22 @@ export default class Pokemon {
   }
 
   moveslotIsFull() {
-    return this.moves === MAX_MOVES;
+    return this.moves.length === MAX_MOVES;
   }
 
-  addMove() {}
+  hasMove(move) {
+    return this.moves.some((currentMove) => currentMove === move);
+  }
 
-  removeMove() {}
+  addMove(move) {
+    if (this.moveslotIsFull()) return false;
+    if (this.hasMove(move)) return false;
+
+    this.moves.push(move);
+    return true;
+  }
+
+  removeMove(move) {
+    this.moves = this.moves.filter((currentMove) => currentMove !== move);
+  }
 }
