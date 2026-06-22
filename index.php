@@ -38,7 +38,7 @@
             <button id="modal-close-button" class="px-4 py-2 rounded-lg font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors">
                 Fechar
             </button>
-            <button id="modal-add-button" class="px-4 py-2 rounded-lg font-semibold text-white bg-blue-500 hover:bg-blue-600 transition-colors shadow-sm">
+            <button id="modal-add-button" class="px-4 py-2 rounded-lg font-semibold text-white bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:shadow-none transition-colors shadow-sm" disabled>
                 Adicionar
             </button>
         </div>

@@ -141,3 +141,11 @@ document.addEventListener("modal:open", async function (event) {
 
   movesModal.open();
 });
+
+document.addEventListener("pokemon:add-attack", function (event) {
+  const {
+    detail: { name, moves },
+  } = event;
+  
+  
+});

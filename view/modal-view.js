@@ -5,15 +5,18 @@ import {
   removeError,
   removeLoading,
 } from "../components/ui-feedback.js";
+import { MAX_MOVES } from "../domain/pokemon.js";
 
 const LOADING_ID = "modal-loading-p";
 const ERROR_ID = "modal-error";
+const SELECT_ID = "moves-select";
 
 export default class MovesModalView {
   dialog;
   addButton;
   closeButton;
   selectDiv;
+  currentPokemonName = "";
 
   constructor({ dialogId }) {
     this.dialog = document.getElementById(dialogId);
@@ -26,13 +29,42 @@ export default class MovesModalView {
   }
 
   bindEvents() {
-    this.addButton.addEventListener("click", (e) => {});
+    this.addButton.addEventListener("click", (e) => {
+      const select = this.selectDiv.querySelector(`#${SELECT_ID}`);
+      const selectedOptions = select.selectedOptions;
+      const movesTexts = Array.from(selectedOptions).map(
+        (option) => option.value,
+      );
+      document.dispatchEvent(
+        new CustomEvent("pokemon:add-attack", {
+          detail: { name: this.currentPokemonName, moves },
+        }),
+      );
+    });
     this.closeButton.addEventListener("click", (e) => {
       this.close();
     });
+    this.selectDiv.addEventListener("change", (e) => {
+      const selectedOptions = Array.from(e.target.selectedOptions);
+
+      if (selectedOptions.length > MAX_MOVES) {
+        this.showFetchError(`Você só pode escolher até ${MAX_MOVES} ataques!`);
+
+        selectedOptions.forEach((option, index) => {
+          if (index >= MAX_MOVES) {
+            option.selected = false;
+          }
+        });
+      } else {
+        removeError({ element: this.selectDiv, errorParId: ERROR_ID });
+      }
+
+      this.addButton.disabled = e.target.selectedOptions.length === 0;
+    });
   }
 
-  open() {
+  open(pokemonName) {
+    this.currentPokemonName = pokemonName;
     this.dialog.showModal();
   }
 
@@ -62,7 +94,12 @@ export default class MovesModalView {
   }
 
   appendSelect(movesList) {
-    const select = createMovesSelect({ movesList });
+    const select = createMovesSelect({ selectId: SELECT_ID, movesList });
     this.selectDiv.replaceChildren(select);
+  }
+
+  removeSelect() {
+    const select = document.getElementById(SELECT_ID);
+    if (select) select.remove();
   }
 }

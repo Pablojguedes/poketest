@@ -27,7 +27,7 @@ export function createTeamCard({ name, imageSrc }) {
   const div = createCustomElement({
     tag: "div",
     classes: [
-      "relative", // <-- O PULO DO GATO 1: Parent precisa ser relative
+      "relative",
       "border",
       "rounded",
       "p-2",
@@ -164,9 +164,9 @@ export function createDisplayCard({ name, imageSrc, weight, height, types }) {
   return fragment;
 }
 
-export function createMovesSelect({ movesList = [], classes = [] }) {
+export function createMovesSelect({ selectId, movesList = [], classes = [] }) {
   const select = document.createElement("select");
-  select.id = "moves-select";
+  select.id = selectId;
 
   select.multiple = true;
 

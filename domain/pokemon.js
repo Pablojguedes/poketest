@@ -1,4 +1,4 @@
-const MAX_MOVES = 4;
+export const MAX_MOVES = 4;
 export default class Pokemon {
   name;
   imageSrc;
