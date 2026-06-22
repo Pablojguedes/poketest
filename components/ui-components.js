@@ -163,3 +163,50 @@ export function createDisplayCard({ name, imageSrc, weight, height, types }) {
 
   return fragment;
 }
+
+export function createMovesSelect({ movesList = [], classes = [] }) {
+  const select = document.createElement("select");
+  select.id = "moves-select";
+
+  select.multiple = true;
+
+  const defaultClasses = [
+    "w-full",
+    "border",
+    "border-gray-300",
+    "rounded-lg",
+    "p-2",
+    "mb-4",
+    "text-gray-700",
+    "bg-white",
+    "focus:ring-2",
+    "focus:ring-blue-500",
+    "outline-none",
+    "transition-all",
+    "h-48",
+    "overflow-y-auto",
+    "shadow-inner",
+  ];
+
+  select.classList.add(...defaultClasses);
+  if (classes.length > 0) {
+    select.classList.add(...classes);
+  }
+
+  movesList.forEach((move) => {
+    const option = document.createElement("option");
+    option.value = move;
+    option.text = capitalize(move);
+
+    option.classList.add(
+      "p-2",
+      "cursor-pointer",
+      "rounded",
+      "hover:bg-blue-50",
+    );
+
+    select.appendChild(option);
+  });
+
+  return select;
+}

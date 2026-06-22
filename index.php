@@ -31,9 +31,8 @@
             <p class="text-sm text-gray-500 mt-1">Escolha até 4 ataques para sua equipe.</p>
         </div>
 
-        <select id="moves-select" class="w-full border border-gray-300 rounded-lg p-3 mb-6 text-gray-700 bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
-            <option value="" disabled selected>Selecione um ataque...</option>
-        </select>
+        <div id="moves-select-div">
+        </div>
 
         <div class="flex justify-end space-x-3 mt-2">
             <button id="modal-close-button" class="px-4 py-2 rounded-lg font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors">

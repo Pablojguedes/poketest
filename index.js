@@ -120,12 +120,14 @@ document.addEventListener("modal:open", async function (event) {
   const {
     detail: { name },
   } = event;
-  //TODO: ADICIONAR LOGICA DE LISTA DE MOVES NO MODAL
   movesModal.showLoading();
   try {
     const pokemonData = await fetchPokemonData(name);
     const { moves } = pokemonData;
-    const movesList = moves.map(({ name }) => name);
+
+    const movesList = moves.map(({ move: { name } }) => name);
+
+    movesModal.appendSelect(movesList);
   } catch (error) {
     if (error.status === 404)
       movesModal.showFetchError("Pokémon não encontrado");
