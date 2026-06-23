@@ -259,7 +259,6 @@ export function createMoveBadge(moveName, pokemonName) {
     dataset: {
       action: "remove-move",
       move: moveName,
-      pokemon: pokemonName,
     },
   });
 

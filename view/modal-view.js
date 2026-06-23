@@ -27,6 +27,7 @@ export default class MovesModalView {
     this.addButton = this.dialog.querySelector("#modal-add-button");
     this.closeButton = this.dialog.querySelector("#modal-close-button");
     this.selectDiv = this.dialog.querySelector("#moves-select-div");
+    this.movesContainer = this.dialog.querySelector("#pokemon-moves-container");
 
     this.bindEvents();
   }
@@ -63,6 +64,19 @@ export default class MovesModalView {
       }
 
       this.addButton.disabled = e.target.selectedOptions.length === 0;
+    });
+    this.movesContainer.addEventListener("click", (event) => {
+      const target = event.target;
+
+      if (target.dataset.action === "remove-move") {
+        const moveName = target.dataset.move;
+
+        document.dispatchEvent(
+          new CustomEvent("pokemon:remove-attack", {
+            detail: { moveName, pokemon: this.currentPokemon },
+          }),
+        );
+      }
     });
   }
 
@@ -108,12 +122,11 @@ export default class MovesModalView {
   }
 
   appendMovesDiv(pokemon) {
-    const movesContainer = document.getElementById("pokemon-moves-container");
-    movesContainer.innerHTML = "";
+    this.movesContainer.innerHTML = "";
 
     pokemon.moves.forEach((move) => {
       const moveElement = createMoveBadge(move, pokemon.name);
-      movesContainer.appendChild(moveElement);
+      this.movesContainer.appendChild(moveElement);
     });
   }
 }

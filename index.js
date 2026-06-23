@@ -138,7 +138,7 @@ document.addEventListener("modal:open", async function (event) {
   } finally {
     movesModal.hideLoading();
   }
-  const pokemon = team.members.find((member) => member.name === name);
+  const pokemon = team.getMember(name);
   movesModal.open(pokemon);
 });
 
@@ -161,6 +161,16 @@ document.addEventListener("pokemon:add-attack", function (event) {
     }
   });
 
+  team.save();
+
+  movesModal.appendMovesDiv(pokemon);
+});
+
+document.addEventListener("pokemon:remove-attack", function (event) {
+  const {
+    detail: { pokemon, moveName },
+  } = event;
+  pokemon.removeMove(moveName);
   team.save();
 
   movesModal.appendMovesDiv(pokemon);

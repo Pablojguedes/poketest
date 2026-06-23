@@ -38,6 +38,12 @@ export default class Team {
     return this.members.some(({ name }) => name === memberName);
   }
 
+  getMember(memberName) {
+    if (this.hasMember(memberName))
+      return this.members.find(({ name }) => name === memberName);
+    return null;
+  }
+
   isFull() {
     return this.members.length === MAX_TEAM_SIZE;
   }
