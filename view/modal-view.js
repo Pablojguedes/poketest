@@ -1,4 +1,7 @@
-import { createMovesSelect } from "../components/ui-components.js";
+import {
+  createMoveBadge,
+  createMovesSelect,
+} from "../components/ui-components.js";
 import {
   appendError,
   appendLoading,
@@ -16,7 +19,7 @@ export default class MovesModalView {
   addButton;
   closeButton;
   selectDiv;
-  currentPokemonName = "";
+  currentPokemon = {};
 
   constructor({ dialogId }) {
     this.dialog = document.getElementById(dialogId);
@@ -37,7 +40,7 @@ export default class MovesModalView {
       );
       document.dispatchEvent(
         new CustomEvent("pokemon:add-attack", {
-          detail: { name: this.currentPokemonName, moves: movesTexts },
+          detail: { pokemon: this.currentPokemon, moves: movesTexts },
         }),
       );
     });
@@ -63,8 +66,9 @@ export default class MovesModalView {
     });
   }
 
-  open(pokemonName) {
-    this.currentPokemonName = pokemonName;
+  open(pokemon) {
+    this.currentPokemon = pokemon;
+    this.appendMovesDiv(this.currentPokemon);
     this.dialog.showModal();
   }
 
@@ -101,5 +105,15 @@ export default class MovesModalView {
   removeSelect() {
     const select = document.getElementById(SELECT_ID);
     if (select) select.remove();
+  }
+
+  appendMovesDiv(pokemon) {
+    const movesContainer = document.getElementById("pokemon-moves-container");
+    movesContainer.innerHTML = "";
+
+    pokemon.moves.forEach((move) => {
+      const moveElement = createMoveBadge(move, pokemon.name);
+      movesContainer.appendChild(moveElement);
+    });
   }
 }

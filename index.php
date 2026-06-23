@@ -30,9 +30,9 @@
             <h2 class="text-2xl font-extrabold text-gray-800">Ataques</h2>
             <p class="text-sm text-gray-500 mt-1">Escolha até 4 ataques para sua equipe.</p>
         </div>
+        <div id="pokemon-moves-container" class="flex flex-wrap mb-4 min-h-[32px]"></div>
 
-        <div id="moves-select-div">
-        </div>
+        <div id="moves-select-div"></div>
 
         <div class="flex justify-end space-x-3 mt-2">
             <button id="modal-close-button" class="px-4 py-2 rounded-lg font-semibold text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors">
@@ -43,14 +43,14 @@
             </button>
         </div>
     </dialog>
-    <script src="util.js" type="module"></script>
-    <script src="/view/dex-view.js" type="module"></script>
-    <script src="/view/modal-view.js" type="module"></script>
-    <script src="components/ui-components.js" type="module"></script>
-    <script src="components/ui-feedback.js" type="module"></script>
-    <script src="index.js" type="module"></script>
-    <script src="browser-storage.js" type="module"></script>
-    <script src="domain/team.js" type="module"></script>
+    <script src="./util.js" type="module"></script>
+    <script src="./view/dex-view.js" type="module"></script>
+    <script src="./view/modal-view.js" type="module"></script>
+    <script src="./components/ui-components.js" type="module"></script>
+    <script src="./components/ui-feedback.js" type="module"></script>
+    <script src="./index.js" type="module"></script>
+    <script src="./browser-storage.js" type="module"></script>
+    <script src="./domain/team.js" type="module"></script>
 </body>
 
 </html>

@@ -210,3 +210,61 @@ export function createMovesSelect({ selectId, movesList = [], classes = [] }) {
 
   return select;
 }
+
+export function createMoveBadge(moveName, pokemonName) {
+  const badge = createCustomElement({
+    tag: "div",
+    classes: [
+      "inline-flex",
+      "items-center",
+      "bg-blue-100",
+      "text-blue-800",
+      "px-3",
+      "py-1",
+      "rounded-full",
+      "text-sm",
+      "font-semibold",
+      "shadow-sm",
+      "m-1",
+      "border",
+      "border-blue-200",
+      "transition-all",
+    ],
+  });
+
+  const text = createCustomElement({
+    tag: "span",
+    text: capitalize(moveName),
+    classes: ["mr-2"],
+  });
+
+  const removeBtn = createCustomElement({
+    tag: "button",
+    text: "×",
+    classes: [
+      "text-blue-500",
+      "hover:text-blue-800",
+      "hover:bg-blue-200",
+      "rounded-full",
+      "w-5",
+      "h-5",
+      "flex",
+      "items-center",
+      "justify-center",
+      "transition-colors",
+      "font-bold",
+      "leading-none",
+      "focus:outline-none",
+    ],
+    dataset: {
+      action: "remove-move",
+      move: moveName,
+      pokemon: pokemonName,
+    },
+  });
+
+  badge.appendChild(text);
+  badge.appendChild(removeBtn);
+
+  return badge;
+}

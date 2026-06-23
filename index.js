@@ -122,8 +122,7 @@ document.addEventListener("modal:open", async function (event) {
   } = event;
   movesModal.showLoading();
   try {
-    const pokemonData = await fetchPokemonData(name);
-    const { moves } = pokemonData;
+    const { moves } = await fetchPokemonData(name);
 
     const movesList = moves.map(({ move: { name } }) => name);
 
@@ -138,18 +137,16 @@ document.addEventListener("modal:open", async function (event) {
   } finally {
     movesModal.hideLoading();
   }
-
-  movesModal.open(name);
+  const pokemon = team.members.find((member) => member.name === name);
+  movesModal.open(pokemon);
 });
 
 document.addEventListener("pokemon:add-attack", function (event) {
   const {
-    detail: { name, moves = [] },
+    detail: { pokemon, moves = [] },
   } = event;
 
-  if (!team.hasMember(name)) return;
-
-  const pokemon = team.members.find((member) => member.name === name);
+  if (!team.hasMember(pokemon.name)) return;
 
   pokemon.moves = [];
 
