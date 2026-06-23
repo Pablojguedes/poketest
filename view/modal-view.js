@@ -51,7 +51,7 @@ export default class MovesModalView {
       const selectedOptions = Array.from(e.target.selectedOptions);
 
       if (selectedOptions.length > MAX_MOVES) {
-        this.showFetchError(`Você só pode escolher até ${MAX_MOVES} ataques!`);
+        this.showError(`Você só pode escolher até ${MAX_MOVES} ataques!`);
 
         selectedOptions.forEach((option, index) => {
           if (index >= MAX_MOVES) {
@@ -89,7 +89,7 @@ export default class MovesModalView {
     removeLoading({ loadingParId: LOADING_ID });
   }
 
-  showFetchError(message) {
+  showError(message) {
     appendError({
       errorParId: ERROR_ID,
       element: this.selectDiv,

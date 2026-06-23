@@ -2,6 +2,7 @@ import DexView from "./view/dex-view.js";
 import Pokemon from "./domain/pokemon.js";
 import Team from "./domain/team.js";
 import ModalView from "./view/modal-view.js";
+import { MAX_MOVES } from "./domain/pokemon.js";
 
 let lastSearchedPokemon = "";
 let activePokemon;
@@ -148,12 +149,19 @@ document.addEventListener("pokemon:add-attack", function (event) {
 
   if (!team.hasMember(pokemon.name)) return;
 
-  pokemon.moves = [];
-
   moves.forEach((move) => {
-    const added = pokemon.addMove(move);
-    if (!added) movesModal.showFetchError("O pokemon já possui 4 ataques!");
+    try {
+      pokemon.addMove(move);
+    } catch (error) {
+      if (error.message === "MAX_MOVES_REACHED") {
+        movesModal.showError(`O pokemon só pode ter ${MAX_MOVES} ataques!`);
+      } else if (error.message === "DUPLICATE_MOVE") {
+        movesModal.showError(`O pokemon já conhece o ataque ${move}!`);
+      }
+    }
   });
 
   team.save();
+
+  movesModal.appendMovesDiv(pokemon);
 });

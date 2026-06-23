@@ -25,8 +25,8 @@ export default class Pokemon {
   }
 
   addMove(move) {
-    if (this.moveslotIsFull()) return false;
-    if (this.hasMove(move)) return false;
+    if (this.moveslotIsFull()) throw new Error("MAX_MOVES_REACHED");
+    if (this.hasMove(move)) throw new Error("DUPLICATE_MOVE");
 
     this.moves.push(move);
     return true;
