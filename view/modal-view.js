@@ -80,7 +80,7 @@ export default class MovesModalView {
     });
   }
 
-  open({ name, moves }) {
+  open({ name, moves = [] }) {
     this.currentPokemonName = name;
     this.appendMovesDiv({ name: this.currentPokemonName, moves });
     this.dialog.showModal();
@@ -88,6 +88,13 @@ export default class MovesModalView {
 
   close() {
     removeError({ element: this.selectDiv, errorParId: ERROR_ID });
+
+    this.removeSelect();
+
+    this.movesContainer.replaceChildren();
+
+    this.currentPokemonName = null;
+
     this.dialog.close();
   }
 
@@ -122,7 +129,7 @@ export default class MovesModalView {
   }
 
   appendMovesDiv({ name, moves = [] }) {
-    this.movesContainer.innerHTML = "";
+    this.movesContainer.replaceChildren();
 
     moves.forEach((move) => {
       const moveElement = createMoveBadge(move, name);
