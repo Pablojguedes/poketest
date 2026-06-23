@@ -39,9 +39,7 @@ export default class Team {
   }
 
   getMember(memberName) {
-    if (this.hasMember(memberName))
-      return this.members.find(({ name }) => name === memberName);
-    return null;
+    return this.members.find(({ name }) => name === memberName) || null;
   }
 
   isFull() {

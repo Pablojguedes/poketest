@@ -17,6 +17,7 @@ import {
 const LOADING_ID = "loading-p";
 const INPUT_ERROR_ID = "pokemon-input-error";
 const TEAM_ERROR_ID = "pokemon-team-error";
+const MODAL_ERROR_ID = "pokemon-modal-error";
 const FULL_TEAM_ERROR_ID = "team-full-error";
 
 export default class DexView {
@@ -156,4 +157,5 @@ export default class DexView {
   hideTeamSection() {
     this.teamDiv.classList.add("hidden");
   }
+
 }

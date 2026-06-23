@@ -121,6 +121,13 @@ document.addEventListener("modal:open", async function (event) {
   const {
     detail: { name },
   } = event;
+
+  const pokemon = team.getMember(name);
+  if (!pokemon) {
+    alert("Não foi possível abrir o modal. Tente novamente mais tarde!");
+    return;
+  }
+  movesModal.open(pokemon);
   movesModal.showLoading();
   try {
     const { moves } = await fetchPokemonData(name);
@@ -138,16 +145,15 @@ document.addEventListener("modal:open", async function (event) {
   } finally {
     movesModal.hideLoading();
   }
-  const pokemon = team.getMember(name);
-  movesModal.open(pokemon);
 });
 
 document.addEventListener("pokemon:add-attack", function (event) {
   const {
-    detail: { pokemon, moves = [] },
+    detail: { name, moves = [] },
   } = event;
 
-  if (!team.hasMember(pokemon.name)) return;
+  const pokemon = team.getMember(name);
+  if (!pokemon) return;
 
   moves.forEach((move) => {
     try {
@@ -168,8 +174,13 @@ document.addEventListener("pokemon:add-attack", function (event) {
 
 document.addEventListener("pokemon:remove-attack", function (event) {
   const {
-    detail: { pokemon, moveName },
+    detail: { pokemonName, moveName },
   } = event;
+
+  const pokemon = team.getMember(pokemonName);
+
+  if (!pokemon) return;
+
   pokemon.removeMove(moveName);
   team.save();
 
